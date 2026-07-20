@@ -7,6 +7,10 @@ import { anggotaList } from '../data/anggota';
 function Home({ records, onAddRecord }) {
   const navigate = useNavigate();
   const [selectedName, setSelectedName] = useState('');
+  const storedUsername = localStorage.getItem('absensi-kkn-username') || '';
+  const currentUserName = localStorage.getItem('absensi-kkn-role') === 'anggota'
+    ? anggotaList.find((item) => item.toLowerCase() === storedUsername.toLowerCase()) || storedUsername
+    : '';
 
   const barcodeBars = Array.from({ length: 40 }, (_, index) => {
     const width = index % 5 === 0 ? 8 : index % 3 === 0 ? 5 : 3;
@@ -79,7 +83,7 @@ function Home({ records, onAddRecord }) {
         </div>
       </section>
 
-      <AttendanceForm onSubmit={onAddRecord} />
+      <AttendanceForm onSubmit={onAddRecord} defaultName={currentUserName} />
       <div className="card">
         <h3>Catatan saat ini</h3>
         <p>Jumlah absensi: {records.length}</p>

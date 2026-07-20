@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { anggotaList } from '../data/anggota';
 
 function Login() {
   const navigate = useNavigate();
@@ -10,16 +11,22 @@ function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (username === 'admin' && password === 'admin') {
+    const normalizedUsername = username.trim();
+    const memberMatch = anggotaList.find((item) => item.toLowerCase() === normalizedUsername.toLowerCase());
+
+    if (normalizedUsername === 'admin' && password === 'admin') {
       localStorage.setItem('absensi-kkn-auth', 'true');
       localStorage.setItem('absensi-kkn-role', 'admin');
+      localStorage.setItem('absensi-kkn-username', normalizedUsername);
       navigate('/');
       return;
     }
 
-    if (username === 'anggota' && password === 'anggota') {
+    if (password === 'anggota' && (normalizedUsername === 'anggota' || Boolean(memberMatch))) {
+      const memberName = memberMatch || normalizedUsername;
       localStorage.setItem('absensi-kkn-auth', 'true');
       localStorage.setItem('absensi-kkn-role', 'anggota');
+      localStorage.setItem('absensi-kkn-username', memberName);
       navigate('/');
       return;
     }

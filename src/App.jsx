@@ -27,6 +27,12 @@ function App() {
     setRecords((prev) => {
       const updated = [nextRecord, ...prev];
       exportAttendanceToExcel(updated);
+
+      if (localStorage.getItem('absensi-kkn-role') === 'anggota' && nextRecord.nama) {
+        localStorage.setItem('absensi-kkn-member-name', nextRecord.nama);
+        localStorage.setItem('absensi-kkn-username', nextRecord.nama);
+      }
+
       return updated;
     });
   };

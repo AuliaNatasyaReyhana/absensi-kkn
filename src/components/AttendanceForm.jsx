@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { anggotaList } from '../data/anggota';
 
-function AttendanceForm({ onSubmit }) {
-  const [nama, setNama] = useState('');
+function AttendanceForm({ onSubmit, defaultName = '' }) {
+  const [nama, setNama] = useState(defaultName || '');
   const [status, setStatus] = useState('hadir');
   const [keterangan, setKeterangan] = useState('');
   const [tanggal, setTanggal] = useState(new Date().toISOString().slice(0, 10));
@@ -13,6 +13,12 @@ function AttendanceForm({ onSubmit }) {
     month: 'long',
     year: 'numeric',
   }), []);
+
+  useEffect(() => {
+    if (defaultName) {
+      setNama(defaultName);
+    }
+  }, [defaultName]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

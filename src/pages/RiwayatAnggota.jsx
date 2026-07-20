@@ -1,8 +1,24 @@
 function RiwayatAnggota({ records }) {
   const role = localStorage.getItem('absensi-kkn-role');
   const username = localStorage.getItem('absensi-kkn-username') || 'anggota';
+  const memberName = localStorage.getItem('absensi-kkn-member-name') || username;
 
-  const myRecords = records.filter((item) => item.nama === username || item.nama === 'anggota');
+  const myRecords = records.filter((item) => {
+    const recordName = item.nama?.trim().toLowerCase();
+    const loginName = username?.trim().toLowerCase();
+    const sessionMemberName = memberName?.trim().toLowerCase();
+
+    if (role === 'admin') {
+      return true;
+    }
+
+    return (
+      recordName === loginName ||
+      recordName === sessionMemberName ||
+      recordName === 'anggota' ||
+      recordName === 'admin'
+    );
+  });
 
   return (
     <div className="grid">
