@@ -18,6 +18,7 @@ function Navbar() {
       <nav>
         <Link to="/">Home</Link>
         {isAdmin ? <Link to="/admin">Admin</Link> : null}
+        {isLoggedIn && !isAdmin ? <Link to="/riwayat">Riwayat</Link> : null}
         {isLoggedIn ? (
           <span style={{ color: '#e2e8f0', fontWeight: 600 }}>
             {isAdmin ? 'Admin' : 'Anggota'}

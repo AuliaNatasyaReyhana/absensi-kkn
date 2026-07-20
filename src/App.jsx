@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
 import Success from './pages/Success';
+import RiwayatAnggota from './pages/RiwayatAnggota';
 import { exportAttendanceToExcel } from './utils/exportExcel';
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home records={records} onAddRecord={handleAddRecord} />} />
             <Route path="/admin" element={isAuthenticated() ? <Admin records={records} onDeleteRecord={handleDeleteRecord} /> : <Navigate to="/login" replace />} />
+            <Route path="/riwayat" element={isAuthenticated() ? <RiwayatAnggota records={records} /> : <Navigate to="/login" replace />} />
             <Route path="/login" element={<Login />} />
             <Route path="/success" element={<Success />} />
           </Routes>
